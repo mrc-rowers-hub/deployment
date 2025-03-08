@@ -18,6 +18,28 @@ services:
     networks:
       - mrc-network
 
+  mysql-2:
+    image: mysql:8.0
+    container_name: mrc-mysql-2 # reconsider the naming of this one?
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mrc_resources
+    ports:
+      - "3308:3306"
+    networks:
+      - mrc-network
+
+  mysql-3:
+    image: mysql:8.0
+    container_name: mrc-mysql-3 # reconsider the naming of this one?
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mrc_resources
+    ports:
+      - "3309:3306"
+    networks:
+      - mrc-network
+
   mrc-condition-checker:
     build:
       context: ../../mrc-condition-checker/condition-checker
@@ -30,6 +52,33 @@ services:
     networks:
       - mrc-network
       - default
+
+  mrc-members-hub:
+    build:
+      context: ../../mrc-members-hub/row-your-boat
+      dockerfile: Dockerfile
+    container_name: mrc-members-hub
+    ports:
+      - "8082:8082"
+    networks:
+      - mrc-network
+      - default
+
+  mrc-resources:
+    build:
+      context: ../../mrc-resources
+      dockerfile: Dockerfile
+    container_name: mrc-resources
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-2:3306/mrc_resources
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - mrc-network
+      - default
+
 
   mrc-crm: # this doesn't work the first time
     build:
