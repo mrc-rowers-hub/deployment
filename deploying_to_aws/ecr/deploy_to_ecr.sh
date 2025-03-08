@@ -1,18 +1,17 @@
 #!/bin/bash
 
-# Prompt the user for AWS_ACCOUNT_ID if not provided as a variable
 if [ -z "$AWS_ACCOUNT_ID" ]; then
   read -p "Please enter your AWS Account ID: " AWS_ACCOUNT_ID
 fi
 
 AWS_REGION="eu-west-1"
-ECR_REPOS=("crm-repo" "resources-repo" "scheduler-repo" "members-hub-repo" "condition-checker-repo")  # List of your ECR repos
+ECR_REPOS=("crm-repo" "resources-repo" "scheduler-repo" "members-hub-repo" "condition-checker-repo")
 REPO_PATHS=(
-    "../../../mrc-condition-checker/condition-checker"   # Path to the Dockerfile for condition-checker
-    "../../../mrc-crm"                                   # Path to the Dockerfile for crm
-    "../../../mrc-resources"                             # Path to the Dockerfile for resources
-    "../../../mrc-scheduler-service/scheduler-service"    # Path to the Dockerfile for scheduler-service
-    "../../../mrc-members-hub"                           # Path to the Dockerfile for members-hub
+    "../../../mrc-condition-checker/condition-checker"
+    "../../../mrc-crm"
+    "../../../mrc-resources"
+    "../../../mrc-scheduler-service/scheduler-service"
+    "../../../mrc-members-hub/row-your-boat"
 )
 
 # Authenticate Docker to AWS ECR
