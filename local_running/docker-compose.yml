@@ -1,4 +1,12 @@
 services:
+  wiremock:
+    image: wiremock/wiremock:2.35.0
+    command: "--global-response-templating --verbose"
+    volumes:
+      - $PWD/wiremock:/home/wiremock
+    ports:
+      - "5050:8080"
+
   mysql:
     image: mysql:8.0
     container_name: mrc-crm-mysql
@@ -21,6 +29,21 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mrc-crm-mysql:3306/crm
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - mysql
+    networks:
+      - mrc-network
+      - default
+
+  mrc-condition-checker:
+    build:
+      context: ../../mrc-condition-checker/condition-checker
+      dockerfile: Dockerfile
+    container_name: mrc-condition-checker
+    ports:
+      - "8080:8080"
+    environment:
+      OPENWEATHER_API_KEY: "30e37ff4eced9848ff7533eb14b0c685" # this is sensitive, but will be rotated once I've sorted the deployment properly
     depends_on:
       - mysql
     networks:
