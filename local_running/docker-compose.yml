@@ -9,7 +9,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: mrc-crm-mysql # reconsider the naming of this one?
+    container_name: mrc-mysql # reconsider the naming of this one?
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: crm
@@ -41,7 +41,7 @@ services:
     ports:
       - "8085:8085"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mrc-crm-mysql:3306/crm
+      SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql:3306/crm
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: password
     depends_on:
@@ -49,7 +49,6 @@ services:
     networks:
       - mrc-network
       - default
-
 
 networks:
   mrc-network:
