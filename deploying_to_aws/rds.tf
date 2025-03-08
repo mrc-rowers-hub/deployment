@@ -9,7 +9,11 @@ resource "aws_db_instance" "mrc_crm_db" {
   publicly_accessible    = false
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   skip_final_snapshot    = true
-  subnet_group_name      = aws_db_subnet_group.main.name
+  db_subnet_group_name   = aws_db_subnet_group.main.name
+
+  tags = {
+    Name = "mrc-crm-db"
+  }
 }
 
 resource "aws_db_instance" "mrc_resources_db" {
@@ -23,7 +27,7 @@ resource "aws_db_instance" "mrc_resources_db" {
   publicly_accessible    = false
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   skip_final_snapshot    = true
-  subnet_group_name      = aws_db_subnet_group.main.name
+  db_subnet_group_name   = aws_db_subnet_group.main.name # Corrected here
 }
 
 resource "aws_db_instance" "rowers_hub_db" {
@@ -37,5 +41,5 @@ resource "aws_db_instance" "rowers_hub_db" {
   publicly_accessible    = false
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
   skip_final_snapshot    = true
-  subnet_group_name      = aws_db_subnet_group.main.name
+  db_subnet_group_name   = aws_db_subnet_group.main.name # Corrected here
 }
