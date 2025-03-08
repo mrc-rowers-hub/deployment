@@ -34,7 +34,7 @@ services:
     container_name: mrc-mysql-3 # reconsider the naming of this one?
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: mrc_resources
+      MYSQL_DATABASE: rowers_hub
     ports:
       - "3309:3306"
     networks:
@@ -79,6 +79,20 @@ services:
       - mrc-network
       - default
 
+  mrc-scheduler-service:
+    build:
+      context: ../../mrc-scheduler-service/scheduler-service
+      dockerfile: Dockerfile
+    container_name: mrc-scheduler-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-3:3306/rowers_hub
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - mrc-network
+      - default
 
   mrc-crm: # this doesn't work the first time
     build:
