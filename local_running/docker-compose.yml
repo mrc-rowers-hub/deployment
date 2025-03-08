@@ -1,0 +1,118 @@
+services:
+  wiremock:
+    image: wiremock/wiremock:2.35.0
+    command: "--global-response-templating --verbose"
+    volumes:
+      - $PWD/wiremock:/home/wiremock
+    ports:
+      - "5050:8080"
+
+  mysql:
+    image: mysql:8.0
+    container_name: mrc-mysql # reconsider the naming of this one?
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: crm
+    ports:
+      - "3307:3306"
+    networks:
+      - mrc-network
+
+  mysql-2:
+    image: mysql:8.0
+    container_name: mrc-mysql-2 # reconsider the naming of this one?
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mrc_resources
+    ports:
+      - "3308:3306"
+    networks:
+      - mrc-network
+
+  mysql-3:
+    image: mysql:8.0
+    container_name: mrc-mysql-3 # reconsider the naming of this one?
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rowers_hub
+    ports:
+      - "3309:3306"
+    networks:
+      - mrc-network
+
+  mrc-condition-checker:
+    build:
+      context: ../../mrc-condition-checker/condition-checker
+      dockerfile: Dockerfile
+    container_name: mrc-condition-checker
+    ports:
+      - "8080:8080"
+    environment:
+      OPENWEATHER_API_KEY: "30e37ff4eced9848ff7533eb14b0c685" # this is sensitive, but will be rotated once I've sorted the deployment properly
+    networks:
+      - mrc-network
+      - default
+
+  mrc-members-hub:
+    build:
+      context: ../../mrc-members-hub/row-your-boat
+      dockerfile: Dockerfile
+    container_name: mrc-members-hub
+    ports:
+      - "8082:8082"
+    networks:
+      - mrc-network
+      - default
+
+  mrc-resources:
+    build:
+      context: ../../mrc-resources
+      dockerfile: Dockerfile
+    container_name: mrc-resources
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-2:3306/mrc_resources
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - mrc-network
+      - default
+
+  mrc-scheduler-service:
+    build:
+      context: ../../mrc-scheduler-service/scheduler-service
+      dockerfile: Dockerfile
+    container_name: mrc-scheduler-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-3:3306/rowers_hub
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - mrc-network
+      - default
+
+  mrc-crm: # this doesn't work the first time
+    build:
+      context: ../../mrc-crm
+      dockerfile: Dockerfile
+    container_name: mrc-crm
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql:3306/crm
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - mysql
+    networks:
+      - mrc-network
+      - default
+
+networks:
+  mrc-network:
+    driver: bridge
+  default:
+    driver: bridge
