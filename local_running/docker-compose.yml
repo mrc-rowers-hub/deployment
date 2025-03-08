@@ -27,8 +27,6 @@ services:
       - "8080:8080"
     environment:
       OPENWEATHER_API_KEY: "30e37ff4eced9848ff7533eb14b0c685" # this is sensitive, but will be rotated once I've sorted the deployment properly
-    depends_on:
-      - mysql
     networks:
       - mrc-network
       - default
