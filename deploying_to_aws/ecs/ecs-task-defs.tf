@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "condition-checker" {
 
   container_definitions = jsonencode([{
     name      = "condition-checker-container"
-    image     = "043309348262.dkr.ecr.eu-west-1.amazonaws.com/condition-checker-repo:latest"
+    image     = "043309348262.dkr.ecr.eu-west-1.amazonaws.com/condition-checker-repo:latest" # can we have this is a var?
     essential = true
     portMappings = [{
       containerPort = 8080
