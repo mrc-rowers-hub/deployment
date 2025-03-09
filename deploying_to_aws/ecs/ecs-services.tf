@@ -8,7 +8,7 @@ resource "aws_lb_target_group" "condition_checker_checker_target_group" {
   target_type  = "ip"
 
   health_check {
-    path                = "/actuator/health" # todo, add this?
+    path                = "/" # todo - add health
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
@@ -48,7 +48,7 @@ resource "aws_lb_target_group" "resources_target_group" {
   target_type  = "ip"
 
   health_check {
-    path                = "/health"
+    path                = "/" # todo - add health
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
@@ -88,7 +88,7 @@ resource "aws_lb_target_group" "members_hub_target_group" {
   target_type  = "ip"
 
   health_check {
-    path                = "/health"
+    path                = "/" # todo - add health
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
@@ -130,7 +130,7 @@ resource "aws_lb_target_group" "crm_target_group" {
   target_type  = "ip"
 
   health_check {
-    path                = "/health" # Health check URL for CRM
+    path                = "/" # todo - add health
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
@@ -171,7 +171,7 @@ resource "aws_lb_target_group" "scheduler_service_target_group" {
   target_type  = "ip"
 
   health_check {
-    path                = "/health" # Health check URL for Scheduler service
+    path                = "/" # todo - add health
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
