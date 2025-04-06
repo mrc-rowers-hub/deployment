@@ -22,8 +22,3 @@ Expected structure:
 └── mrc-scheduler-service
 ```
 
-Steps: 
-1. rds terraform 
-2. ecr terraform 
-3. deploy_to_ecr.sh (`chmod +x deploy_to_ecr.sh` & `./deploy_to_ecr.sh`
-   )
