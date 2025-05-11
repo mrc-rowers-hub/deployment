@@ -77,8 +77,8 @@ services:
       - "8083:8083"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-2:3306/mrc_resources?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
     networks:
       - mrc-network
       - default
@@ -92,8 +92,8 @@ services:
       - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-3:3306/rowers_hub?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
     networks:
       - mrc-network
       - default
@@ -107,8 +107,8 @@ services:
       - "8085:8085"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql:3306/crm?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
     depends_on:
       - mysql
     networks:
