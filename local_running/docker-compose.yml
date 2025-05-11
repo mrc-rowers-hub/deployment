@@ -3,7 +3,7 @@ services:
     image: wiremock/wiremock:2.35.0
     command: "--global-response-templating --verbose"
     volumes:
-      - $PWD/wiremock:/home/wiremock
+      - ./wiremock:/home/wiremock
     ports:
       - "5050:8080"
 
@@ -48,7 +48,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      OPENWEATHER_API_KEY: "30e37ff4eced9848ff7533eb14b0c685" # this is sensitive, but will be rotated once I've sorted the deployment properly
+      OPENWEATHER_API_KEY: "30e37ff4eced9848ff7533eb14b0c685"
     networks:
       - mrc-network
       - default
@@ -77,8 +77,8 @@ services:
       - "8083:8083"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-2:3306/mrc_resources?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:root}  # Environment variable for username
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:password}  # Environment variable for password
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
     networks:
       - mrc-network
       - default
@@ -92,8 +92,8 @@ services:
       - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql-3:3306/rowers_hub?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:root}  # Environment variable for username
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:password}  # Environment variable for password
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
     networks:
       - mrc-network
       - default
@@ -107,8 +107,8 @@ services:
       - "8085:8085"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mrc-mysql:3306/crm?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME:root}  # Environment variable for username
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:password}  # Environment variable for password
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
     depends_on:
       - mysql
     networks:
