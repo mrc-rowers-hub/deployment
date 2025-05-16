@@ -9,6 +9,7 @@ apps persist upon sessions being terminated (I run these using PuTTy)
 * check for running ps aux | grep spring-boot:run
 * stop using kill <PID>
 
+Using puTTy: login as ec2-user 
 
 
 
